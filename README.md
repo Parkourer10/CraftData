@@ -36,7 +36,7 @@ OLLAMA:
 
 Chromedriver for your chrome version:
 - https://googlechromelabs.github.io/chrome-for-testing/
-
+please put the installed chromedriver in the project dir 
 ---
 #### Run the project:
 ```bash
