@@ -8,6 +8,9 @@ import requests
 def scraper(website):
     chrome_driver_path = './chromedriver' # make sure to download chrome driver for ur chrome version!!!
     options = webdriver.ChromeOptions()
+    options.add_argument('--headless')  
+    options.add_argument('--no-sandbox')  
+    options.add_argument('--disable-dev-shm-usage')  
     driver = webdriver.Chrome(service= Service(chrome_driver_path), options=options)
 
     try:
