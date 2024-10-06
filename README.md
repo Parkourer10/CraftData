@@ -45,12 +45,15 @@ please put the installed chromedriver in the project dir
 
 
 ## Dataset structure:
-```
-{
-    "url": "https://example.com",
-    "question": "question",
-    "answer": "answer to the question"
-}
+```json
+[
+    {
+        "url": "example.com
+        "question": "question",
+        "answer": "answer"
+    }
+]
+
 ```
 
 
