@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 
 # File names
-WIKI_BASE_URL = "https://minecraft.wiki/" #website name
+WIKI_BASE_URL = "https://minecraft.wiki/" #website name. you can change it btw
 OUTPUT_FILE = "wiki_pages.txt" #file name of the wikilinks
 output_json_name = 'qa_results.json' # The file where the Q&A results will be saved
 # print('AAAAAAAA')
