@@ -58,7 +58,7 @@ def process_link(url):
 def main():
     #check if the output file alr exists to not waste time
     if not os.path.exists(OUTPUT_FILE):
-        print(f"{OUTPUT_FILE} not found. Scraping links from {WIKI_BASE_URL}.")
+        # print(f"{OUTPUT_FILE} not found.")
         wikilinks(WIKI_BASE_URL, OUTPUT_FILE)
     else:
         print(f"Using existing file {OUTPUT_FILE}.")
