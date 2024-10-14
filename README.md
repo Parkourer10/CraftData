@@ -48,7 +48,7 @@ please put the installed chromedriver in the project dir
 ```json
 [
     {
-        "url": "example.com
+        "url": "example.com"
         "question": "question",
         "answer": "answer"
     }
