@@ -3,26 +3,35 @@ from selenium.webdriver.chrome.service import Service
 import time
 from bs4 import BeautifulSoup
 import requests
-
+from requests.exceptions import RequestException
 
 def scraper(website):
-    chrome_driver_path = './chromedriver' # make sure to download chrome driver for ur chrome version!!!
+    chrome_driver_path = './chromedriver' #make sure to download chrome driver for your chrome version!!!
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')  
     options.add_argument('--no-sandbox')  
     options.add_argument('--disable-dev-shm-usage')  
-    driver = webdriver.Chrome(service= Service(chrome_driver_path), options=options)
-
-    try:
-        driver.get(website)
-        html = driver.page_source
-        time.sleep(1)
-
-
-        return html
-    finally:
-        driver.quit()
-
+    
+    while True:
+        try:
+            driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
+            response = requests.get(website)
+            response.raise_for_status()
+            html = response.text
+            
+            driver.get(website)
+            time.sleep(1) #allow time for js or the page to load ig
+            
+            return html
+        except RequestException as e:
+            print(f"Connection failed: {str(e)}. Retrying...")
+            time.sleep(5)
+        except Exception as e:
+            ValueError(f"Error in scraper: {str}")
+            return None
+        finally:
+            if 'driver' in locals():
+                driver.quit()
 def extract_body_content(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
     body_content = soup.body
@@ -105,7 +114,7 @@ def wikilinks(base_url, output_file):
                                 
                 
                 
-                # time.sleep(1)
+                
                 
             except requests.RequestException as e:
                 print(f"Error scraping {current_url}: {e}")
@@ -119,7 +128,7 @@ def wikilinks(base_url, output_file):
         for page in sorted(all_pages):
             f.write(page + '\n')
     
-    print("done")
+    
     
 
 

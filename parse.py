@@ -6,8 +6,10 @@ template = (
     "Please follow these instructions carefully: \n\n"
     "1. **Extract Information:** Only extract the information that directly matches the provided description: {parse_description}. "
     "2. **No Extra Content:** Do not include any additional text, comments, or explanations in your response. "
-    "3. **Empty Response:** If no information matches the description, return an empty string ('')."
+    "3. **Empty Response:** If no information matches the description, return an empty string {} ONLY."
     "4. **Direct Data Only:** Your output should contain only the data that is explicitly requested, with no other text."
+    "5. **No licensings:** Do not include any licensing or attribution information in your response."
+    "6  **No version information:** Do not include any version information in your response unless asked to do so."
 )
 
 model = OllamaLLM(model="llama3.2:3b") #replace with any model u wanna use.

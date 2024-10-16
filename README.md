@@ -55,6 +55,7 @@ please put the installed chromedriver in the project dir
 ]
 
 ```
+# Sorry for bad code, I'm still learning.
 
 
 
