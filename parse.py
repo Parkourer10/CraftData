@@ -22,21 +22,21 @@ Summarize the main content of this webpage about Minecraft in one concise paragr
 Summary:
 """
 
-
 questions_template = """
-Based on the following summary about a Minecraft-related topic, generate as many diverse and unique important questions that capture various aspects of the main topic or significant information as you can. Ensure that:
-1. Each question covers a different aspect of the summary.
-2. No two questions are similar or ask about the same information.
-3. Questions are clear, concise, and directly related to Minecraft.
-4. Questions do not include any numbering or perspective from an AI or user.
-5. Questions focus on game mechanics, features, history, or development.
-6. All questions end with a question mark.
-7. It shouldn't have any licensings or attribution information in your response.
+Based on the following summary about a Minecraft-related topic, generate several diverse and unique important questions that capture various aspects of the main topic. Your output should strictly follow these rules:
 
-Summary: {summary}
+1. Each question must be on its own line with no prefixes (no numbers, bullets, or asterisks)
+2. Each question must cover a unique aspect of the summary
+3. Questions must be clear, concise, and directly related to Minecraft
+4. Questions must be complete sentences ending with a question mark
+5. No meta-text, formatting, or additional commentary
+6. No questions about versions unless explicitly mentioned in the summary
+7. No questions about licensing or website liscensing.
 
-Questions:
-"""
+Here's the summary:
+{summary}
+
+Questions:"""
 
 answer_template = """
 Provide a concise, factual answer to the following question based on the summary about a Minecraft-related topic. The answer should be informative and directly address the question without asking for further clarification or posing new questions.
@@ -48,7 +48,7 @@ Question: {question}
 Answer:
 """
 
-model = OllamaLLM(model="llama3.2:3b")
+model = OllamaLLM(model="qwen2:0.5b")
 
 def parse_with_ollama(dom_chunks, parse_type, context=None):
     if parse_type == "summary":
@@ -73,9 +73,9 @@ def process_content(dom_chunks):
     questions_raw = parse_with_ollama([], "questions", summary)
     questions = [q.strip() for q in questions_raw.split('\n') if q.strip() and q.strip().endswith('?')]
     
-    results = []
+    qa_pairs = []
     for question in questions:
         answer = parse_with_ollama([], "answer", {"summary": summary, "question": question})
-        results.append({"question": question, "answer": answer})
+        qa_pairs.append((question, answer))
     
-    return results
+    return qa_pairs
