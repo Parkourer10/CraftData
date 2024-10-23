@@ -23,7 +23,7 @@ Summary:
 """
 
 questions_template = """
-Based on the following summary about a Minecraft-related topic, generate several diverse and unique important questions that capture various aspects of the main topic. Your output should strictly follow these rules:
+Based on the following summary about a Minecraft-related topic, generate as many several diverse and unique important questions that capture various aspects of the main topic as you can. Your output should strictly follow these rules:
 
 1. Each question must be on its own line with no prefixes (no numbers, bullets, or asterisks)
 2. Each question must cover a unique aspect of the summary
