@@ -33,6 +33,11 @@ OLLAMA:
 ```bash
  ollama pull llama3.2:3b
 ```
+OR
+- Install qwen2 0.5m 
+```bash
+ ollama run qwen2.5:0.5b
+```
 
 Chromedriver for your chrome version:
 - https://googlechromelabs.github.io/chrome-for-testing/
