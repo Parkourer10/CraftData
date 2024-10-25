@@ -1,0 +1,6 @@
+beautifulsoup4
+langchain_ollama
+langchain
+tqdm
+requests
+huggingface_hub
