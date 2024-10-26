@@ -35,7 +35,7 @@ OLLAMA:
 ```
 ---
 #### Change the config file: (IMPORTANT!)
-Change the variables to scrape the approriate wiki/change output dataset name or model name or uploading to huggingface.
+Change the variables to scrape the approriate wiki.
 
 ---
 #### Run the project:
