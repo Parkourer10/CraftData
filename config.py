@@ -8,15 +8,14 @@ SCRAPING_TIMEOUT = 30  #scraping timeout in seconds, if a page takes longer than
 MAX_CONCURRENT_SCRAPES = 10 #change this to a higher value if you want to scrape more urls at once
 HF_DATASET = False  #to upload the dataset to hf hub. To upload it do: (True, "hf_xxxxx", "name of the dataset lol")
 
-#Templates:
 summary_template = """
-Summarize the main content of this webpage about the game very concisely in as paragraphs you have to. Focus on the most important information and key points:
+Summarize the main content of this webpage about the game very concisely in as many paragraphs you have to. Focus on the most important information and key points:
 {dom_content}
 Summary:
 """
 
 questions_template = """
-Based on the following summary about the related topic, generate atleast 5-10 several diverse and unique important questions that capture various aspects of the main topic. Your output should strictly follow these rules:
+Based on the following summary about the related topic, generate atleast 5-10 several diverse, detailed and unique important questions that capture various aspects of the main topic. Your output should strictly follow these rules:
 1. Each question must be on its own line with no prefixes (no numbers, bullets, or asterisks)
 2. Each question must cover a unique aspect of the summary
 3. Questions must be clear, concise, and directly related to Minecraft
@@ -29,7 +28,7 @@ Here's the summary:
 Questions:"""
 
 answer_template = """
-Provide a concise, factual answer to the following question based on the summary about the game. The answer should be informative and directly address the question without asking for further clarification or posing new questions.
+Provide a concise, factual answer to the following question based on the summary about the game. The answer should be informative and directly address the question without asking for further clarification or posing new questions. Do not include unicode characters
 Summary: {summary}
 Question: {question}
 Answer:
