@@ -39,7 +39,7 @@ def scrape_wiki_pages(base_url, output_file):
                                 continue
                             
                             if href.startswith('/') and ':' not in href and '?' not in href:
-                                full_url = BASE_URL + href
+                                full_url = base_url.rstrip('/') + href
                                 if full_url not in visited and full_url not in to_visit:
                                     all_pages.add(full_url)
                                     to_visit.append(full_url)
