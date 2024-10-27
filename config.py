@@ -1,7 +1,7 @@
 #config.py
 MODEL = "llama3.2:1b" #can change this IG
 MAX_CONCURRENT_OLLAMA = 3 #amount of ollama insances to run at once, can be changed
-BASE_URL = "https://minecraft.wiki/"  #base url for wiki
+BASE_URL = ""  #base url for wiki
 OUTPUT_FILE = "links.txt"  #name of the file that will contain the links to be scraped
 OUTPUT_JSON = "dataset.json"  #name of the dataset json file which will be created after scraping
 SCRAPING_TIMEOUT = 30  #scraping timeout in seconds, if a page takes longer than this, it will be skipped
