@@ -8,6 +8,7 @@ from tqdm import tqdm
 from parse import ContentProcessor
 from huggingface_hub import HfApi, create_repo, upload_file, login
 from config import BASE_URL, OUTPUT_FILE, OUTPUT_JSON, SCRAPING_TIMEOUT, HF_DATASET
+import re
 
 def scrape_wiki_pages(base_url, output_file):
     all_pages = set()
@@ -34,8 +35,11 @@ def scrape_wiki_pages(base_url, output_file):
                     for link in soup.find_all('a'):
                         href = link.get('href')
                         if href:
+                            if re.search(r'\d', href) or '/f/' in href or '/f/p/' in href:
+                                continue
+                            
                             if href.startswith('/') and ':' not in href and '?' not in href:
-                                full_url = base_url.rstrip('/') + href
+                                full_url = BASE_URL + href
                                 if full_url not in visited and full_url not in to_visit:
                                     all_pages.add(full_url)
                                     to_visit.append(full_url)
