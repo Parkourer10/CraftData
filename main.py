@@ -7,64 +7,50 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 from parse import ContentProcessor
 from huggingface_hub import HfApi, create_repo, upload_file, login
+from config import BASE_URL, OUTPUT_FILE, OUTPUT_JSON, SCRAPING_TIMEOUT, HF_DATASET
 import re
-
-# Configuration Variables
-BASE_URL = "https://terraria.fandom.com"  # Set your base URL
-OUTPUT_FILE = "wiki_pages.txt" 
-OUTPUT_JSON = "qa_pairs.json"  
-SCRAPING_TIMEOUT = 10  # Adjust the timeout as needed
-HF_DATASET = (None, "your_token", "your_dataset_name")  # Change these as appropriate
 
 def scrape_wiki_pages(base_url, output_file):
     all_pages = set()
-    to_visit = [base_url]  
-    visited = set()  
-
+    to_visit = [base_url]
+    visited = set()
     print(f"Starting to scrape {base_url}")
     
-    with open(output_file, 'w') as f:  
+    with open(output_file, 'w') as f:
         try:
             while to_visit:
-                current_url = to_visit.pop(0) 
+                current_url = to_visit.pop(0)
                 
                 if current_url in visited:
                     continue
-                    
-                visited.add(current_url)
                 
+                visited.add(current_url)
                 print(f"Scraping: {current_url}")
                 
                 try:
                     response = requests.get(current_url)
-                    response.raise_for_status()  
+                    response.raise_for_status()
                     soup = BeautifulSoup(response.text, 'html.parser')
                     
                     for link in soup.find_all('a'):
                         href = link.get('href')
                         if href:
-                            # Skip links with numbers, "/f/", "/f/p/", or language-specific suffixes
-                            if (re.search(r'\d', href) or 
-                                '/f/' in href or 
-                                '/f/p/' in href or 
-                                re.search(r'/[a-z]{2}$', href)):
+                            if re.search(r'\d', href) or '/f/' in href or '/f/p/' in href:
                                 continue
                             
-                            # Correctly concatenate the URL for relative links
                             if href.startswith('/') and ':' not in href and '?' not in href:
-                                full_url = base_url.rstrip('/') + href
-                                
+                                full_url = BASE_URL + href
                                 if full_url not in visited and full_url not in to_visit:
                                     all_pages.add(full_url)
-                                    to_visit.append(full_url) 
+                                    to_visit.append(full_url)
                                     
                                     f.write(full_url + '\n')
-                                    f.flush()  
-    
+                                    f.flush()
+                
                 except requests.RequestException as e:
                     print(f"Error scraping {current_url}: {e}")
                     continue
-        
+            
         except KeyboardInterrupt:
             print("\nScraping interrupted")
     
@@ -73,7 +59,7 @@ def scrape_wiki_pages(base_url, output_file):
     return sorted(all_pages)
 
 async def upload_to_huggingface(file_path: str):
-    if not HF_DATASET or not isinstance(HF_DATASET, tuple) or not HF_DATASET[1]:
+    if not HF_DATASET or not isinstance(HF_DATASET, tuple) or not HF_DATASET[0]:
         print("Upload to Hugging Face is disabled")
         return
         
@@ -133,7 +119,7 @@ async def main():
                             content = await response.text()
                             return await processor.process_content(url, content)
                 except Exception as e:
-                    print(f"Error processing {url}: {e}")
+                    print(f"Error processing {url}")
                 return None
             
             tasks = [process_url(url) for url in batch]
@@ -150,7 +136,7 @@ async def main():
         
         pbar.close()
     
-    print(f"\nDone! Generated {len(all_qa_pairs)} QA pairs")
+    print(f"\ndone! Generated {len(all_qa_pairs)} QA pairs")
     await upload_to_huggingface(OUTPUT_JSON)
 
 if __name__ == "__main__":
