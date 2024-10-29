@@ -23,12 +23,13 @@ Based on the following summary about the related topic, generate atleast 5-10 se
 5. No meta-text, formatting, or additional commentary
 6. No questions about versions unless explicitly mentioned in the summary
 7. No questions about licensing or website liscensing.
+8. Dont say that you are using a summary.
 Here's the summary:
 {summary}
 Questions:"""
 
 answer_template = """
-Provide a concise, factual answer to the following question based on the summary about the game. The answer should be informative and directly address the question without asking for further clarification or posing new questions. Do not include unicode characters
+Provide a concise, factual answer to the following question based on the summary about the game. The answer should be informative and directly address the question without asking for further clarification or posing new questions. Do not include unicode characters. Do not say that you are using a summary
 Summary: {summary}
 Question: {question}
 Answer:
