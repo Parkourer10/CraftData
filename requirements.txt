@@ -4,4 +4,3 @@ langchain
 tqdm
 requests
 huggingface_hub
-
